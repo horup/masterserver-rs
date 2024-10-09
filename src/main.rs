@@ -52,7 +52,6 @@ async fn main() {
         .on_client_connected(|id| println!("Client joined: {id}"))
         .on_client_disconnected(|id| println!("Client left: {id}"))
         .cors()
-        .trace()
         .build();
         let _ = server.serve().await;
     });
