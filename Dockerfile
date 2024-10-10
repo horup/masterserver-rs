@@ -11,4 +11,5 @@ RUN cargo build --release
 FROM debian:bookworm-slim AS runtime
 COPY --from=builder /app/target/release/masterserver /usr/local/bin/masterserver
 EXPOSE 8080
+EXPOSE 8081
 CMD ["masterserver"]
