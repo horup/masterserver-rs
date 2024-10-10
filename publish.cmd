@@ -1,2 +1,2 @@
 docker build . -t horup/masterserver
-docker publish horup/masterserver
+docker push horup/masterserver

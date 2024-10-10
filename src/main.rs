@@ -28,7 +28,9 @@ pub struct SharedState {
 
 #[tokio::main]
 async fn main() {
+    println!("Starting...");
     let server1 = tokio::spawn(async {
+        println!("Starting 'roomy'...");
         let app = Router::new()
             .route("/", get(ws_handler))
             .with_state(SharedState::default());
@@ -42,6 +44,7 @@ async fn main() {
     });
 
     let matchbox = tokio::spawn(async {
+        println!("Starting 'matchbox'...");
         let server = SignalingServer::client_server_builder((Ipv4Addr::UNSPECIFIED, 8081))
         .on_connection_request(|_| {
             Ok(true) // Allow all connections
@@ -56,8 +59,10 @@ async fn main() {
         let _ = server.serve().await;
     });
 
-    let _ = server1.await;
-    let _ = matchbox.await;
+    let res = server1.await;
+    println!("{:?}", res);
+    let res = matchbox.await;
+    println!("{:?}", res);
 }
 
 async fn ws_handler(ws: WebSocketUpgrade, State(state): State<SharedState>) -> impl IntoResponse {
