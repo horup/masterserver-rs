@@ -44,11 +44,13 @@ async fn main() {
     });
 
     let matchbox = tokio::spawn(async {
+        // todo needs to implement room support
         println!("Starting 'matchbox'...");
         let server = SignalingServer::client_server_builder((Ipv4Addr::UNSPECIFIED, 8081))
-        .on_connection_request(|_| {
+        .on_connection_request(|c| {
             Ok(true) // Allow all connections
         })
+        
         .on_id_assignment(|(socket, id)| println!("{socket} received {id}"))
         .on_host_connected(|id| println!("Host joined: {id}"))
         .on_host_disconnected(|id| println!("Host left: {id}"))
