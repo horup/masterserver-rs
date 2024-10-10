@@ -17,7 +17,10 @@ pub enum Protocol {
     Broadcast {
         id:Uuid,
         info:String
-    }
+    },
+    /// sent by clients to server
+    /// keeps the connection alive
+    Keepalive
 }
 
 impl Protocol {
