@@ -1,5 +1,5 @@
 use std::net::{IpAddr, Ipv4Addr};
-use matchbox_signaling::{SignalingServer, SignalingServerBuilder};
+use matchbox_signaling::SignalingServerBuilder;
 use axum::{async_trait, extract::ws::Message, Error};
 use matchbox_protocol::PeerId;
 use matchbox_signaling::{
