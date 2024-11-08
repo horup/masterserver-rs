@@ -5,7 +5,7 @@
 			"type": "cargo",
 			"command": "run",
 			"env": {
-				"RUST_LOG":"info"
+				"RUST_LOG":"debug"
 			},
 			"problemMatcher": [
 				"$rustc"

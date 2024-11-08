@@ -7,23 +7,19 @@ mod roomy;
 #[tokio::main]
 async fn main() {
     tracing_subscriber::registry()
-        .with(
-            tracing_subscriber::EnvFilter::from_default_env()
-        )
+        .with(tracing_subscriber::EnvFilter::from_default_env())
         .with(
             tracing_subscriber::fmt::layer()
                 .compact()
-                .with_file(false)
-                .with_target(false),
+                .with_target(true),
         )
         .init();
 
-    info!("Starting...");
-    let roomy_server = tokio::spawn(roomy::start());
-    let matcbox_server = tokio::spawn(matchbox::start());
-
-    let res = roomy_server.await;
-    println!("{:?}", res);
-    let res = matcbox_server.await;
-    println!("{:?}", res);
+    let roomy_port = 8080;
+    let matchbox_port = 8081;
+    info!("Starting Roomy on port {roomy_port} and Matchbox on port {matchbox_port}");
+    let roomy_server = tokio::spawn(roomy::start(roomy_port));
+    let matcbox_server = tokio::spawn(matchbox::start(matchbox_port));
+    let _ = roomy_server.await;
+    let _ = matcbox_server.await;
 }

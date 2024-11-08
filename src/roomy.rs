@@ -102,12 +102,11 @@ async fn ws_handler(ws: WebSocketUpgrade, State(state): State<SharedState>) -> i
     })
 }
 
-pub async fn start() {
-    info!("Starting 'roomy'...");
+pub async fn start(port:u16) {
     let app = Router::new()
         .route("/", get(ws_handler))
         .with_state(SharedState::default());
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{port}")).await.unwrap();
     axum::serve(
         listener,
         app.into_make_service_with_connect_info::<SocketAddr>(),
